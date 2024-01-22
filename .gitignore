@@ -1,0 +1,11 @@
+node_modules
+dist
+.env
+
+
+# few git ignore which we may include
+# .env.dev
+# .env.test
+# .env.staging
+# .env.prod
+account-key.json

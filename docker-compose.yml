@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+    mysql:
+        container_name: mysql
+        image: mysql:8.0.33
+        restart: always
+        environment:
+            - MYSQL_ROOT_PASSWORD=myPassWord
+            - MYSQL_DATABASE=mm_db
+        ports:
+            - 3308:3306
+        volumes:
+            - db_vol:/var/lib/mysql
+            # - .backup-db:/docker-entrypoint-initdb.d
+    redis:
+        container_name: redis
+        image: redis:7.0.7-alpine
+        restart: always
+        volumes:
+            - redis_vol:/data
+        environment:
+            - REDIS_PASSWORD=1234567
+        ports:
+            - 6379:6379
+
+volumes:
+    db_vol: {}
+    redis_vol: {}

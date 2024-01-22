@@ -1,0 +1,23 @@
+CREATE TABLE `user_table` (
+	`id` varchar(50) NOT NULL,
+	`full_name` varchar(255) NOT NULL,
+	`phone` varchar(20),
+	`email` varchar(255) NOT NULL,
+	`password` varchar(255) NOT NULL,
+	`gender` enum('male','female') NOT NULL DEFAULT 'male',
+	`avatar` varchar(255),
+	`is_email_verified` boolean NOT NULL DEFAULT false,
+	`is_super_admin` boolean NOT NULL DEFAULT false,
+	`country_code` varchar(5) NOT NULL DEFAULT 'BD',
+	`city` varchar(50),
+	`state` varchar(50),
+	`zip_code` varchar(50),
+	`address` varchar(255),
+	`time_zone` varchar(50) NOT NULL DEFAULT 'Asia/Dhaka',
+	`fcm_token` varchar(255),
+	`last_logged_in` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP),
+	`created_at` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP),
+	CONSTRAINT `user_table_id` PRIMARY KEY(`id`),
+	CONSTRAINT `user_table_phone_unique` UNIQUE(`phone`),
+	CONSTRAINT `user_table_email_unique` UNIQUE(`email`)
+);

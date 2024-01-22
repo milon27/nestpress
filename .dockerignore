@@ -1,0 +1,11 @@
+/node_modules
+/dist
+.dockerignore
+Dockerfile
+*.md
+.pnpm-debug.log
+/uploads
+
+# .envs
+.env
+# .env.prod and account json for firebase should be allowed to copy into container otherwise how it will run
