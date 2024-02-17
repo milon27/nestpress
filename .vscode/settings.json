@@ -1,0 +1,31 @@
+{
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "typescript.tsserver.maxTsServerMemory": 6144,
+    "workbench.colorCustomizations": {
+        "titleBar.activeBackground": "#649a5f",
+        "titleBar.inactiveBackground": "#649a5f"
+    },
+    "cSpell.words": [
+        "appleboy",
+        "bkash",
+        "bolditalics",
+        "datetime",
+        "eturino",
+        "expirable",
+        "flushall",
+        "IFNULL",
+        "jhon's",
+        "Karim's",
+        "Kidz",
+        "linebreak",
+        "milon",
+        "nagad",
+        "nestpress",
+        "okhttp",
+        "paralleldrive",
+        "Pdfmake",
+        "samesite",
+        "Siliguri",
+        "tolet"
+    ]
+}
