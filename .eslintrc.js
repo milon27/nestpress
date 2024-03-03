@@ -17,7 +17,7 @@ module.exports = {
         project: "./tsconfig.json",
     },
     plugins: ["@typescript-eslint", "prettier"],
-    ignorePatterns: ["node_modules", "resources", "dist", "drizzle.config.ts", "vitest.config.ts"],
+    ignorePatterns: ["node_modules", "resources", "dist", "drizzle.config.ts", "vitest.config.mjs"],
     rules: {
         "prettier/prettier": [
             "warn",

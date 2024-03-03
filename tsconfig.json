@@ -20,5 +20,5 @@
         "typeRoots": ["./src/types"]
     },
     "exclude": ["resources", "node_modules"],
-    "include": ["./.eslintrc.js", "./vitest.config.ts", "./src"]
+    "include": ["./.eslintrc.js", "./src"]
 }

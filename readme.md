@@ -23,7 +23,7 @@ npx nestpress@latest module category blog
 -   make sure you have [docker](https://www.docker.com/products/docker-desktop/) and [pnpm](https://pnpm.io/) install on your system as node package manager
 -   run mysql database and redis on docker(you should have docker install on your machine)
 
-    -   run `docker compose up` [use git-bash terminal in windows or for mac/linux default terminal is fine]
+    -   run `docker compose up` this will run the database and redis on docker[use git-bash terminal in windows or for mac/linux default terminal is fine]
 
 -   install all dependencies and run the app
 
@@ -44,7 +44,7 @@ npx nestpress@latest module category blog
 
 ```bash
 # Updates all dependencies in package.json
-pnpm up
+pnpm all:update
 
 # run test to check the app is working fine or not
 pnpm test
