@@ -24,3 +24,12 @@ export const SlugParamDto = z
     .strict()
 
 export type ISlugParamDto = z.infer<typeof SlugParamDto>
+
+export const GetAllQueryParamDto = z
+    .object({
+        page: ZodNumericString.optional().default("1"),
+        size: ZodNumericString.optional().default(Constant.PAGE_SIZE.toString()),
+    })
+    .strict()
+
+export type IGetAllQueryParamDto = z.infer<typeof GetAllQueryParamDto>
