@@ -1,5 +1,6 @@
 import { z } from "zod"
-import { ZodEmailString, ZodSimpleString } from "../../utils/zod.util"
+import { Constant } from "../../config/constant/common.constant"
+import { ZodEmailString, ZodNumericString, ZodSimpleString } from "../../utils/zod.util"
 
 export const EmailParamDto = z
     .object({
