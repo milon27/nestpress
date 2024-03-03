@@ -14,6 +14,7 @@ export const CreateUserDto = z.object({
     email: ZodEmailString,
     password: ZodPasswordString,
     gender: z.enum(GenderEnum).default("male").optional(),
+    timeZone: ZodSimpleString,
     fcmToken: ZodSimpleString.max(255).nullish(),
 })
 
@@ -28,7 +29,6 @@ export const UpdateUserDto = CreateUserDto.extend({
     zipCode: ZodSimpleString,
     address: ZodSimpleString,
     lastLoggedIn: ZodDateString,
-    timeZone: ZodSimpleString,
 })
     .partial()
     .refine(ZodMin1UpdateRefine, {

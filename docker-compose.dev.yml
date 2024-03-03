@@ -1,7 +1,7 @@
 version: "3.9"
 services:
-    mm_api:
-        container_name: mm_api
+    np_api:
+        container_name: np_api
         build:
             context: .
             dockerfile: Dockerfile
