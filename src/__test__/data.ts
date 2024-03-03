@@ -9,9 +9,9 @@ export const loginUserPayload: ILoginWithEmailDto = {
 }
 export const createUserPayload: IRegisterDto = {
     provider: RegisterProvider.simple,
-    timeZone: Constant.TIMEZONE,
     user: {
         ...loginUserPayload,
         fullName: "test",
+        timeZone: Constant.TIMEZONE,
     },
 }

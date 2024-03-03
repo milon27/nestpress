@@ -14,20 +14,20 @@ export const VerifyEmailController = {
         try {
             const { email } = req.params as IEmailParamDto
 
-            const member = await UserService.getUserByIdentifier("email", email)
-            if (!member) {
+            const user = await UserService.getUserByIdentifier("email", email)
+            if (!user) {
                 throw new UnAuthorizedError()
             }
-            if (member.isEmailVerified) {
+            if (user.isEmailVerified) {
                 throw new BadRequestError("user's email already verified")
             }
 
-            const code = await OtpUtils.storeAndGetOtp(KeyConstant.EMAIL_OTP_PREFIX_KEY, member.id)
+            const code = await OtpUtils.storeAndGetOtp(KeyConstant.EMAIL_OTP_PREFIX_KEY, user.id)
             if (!code) {
                 throw new ServerError()
             }
-            await SendEmailVerificationCode(member.fullName, member.email, code)
-            return res.status(StatusCode.OK).json(MyResponse(`OTP code sent to ${member.email}`))
+            await SendEmailVerificationCode(user.fullName, user.email, code)
+            return res.status(StatusCode.OK).json(MyResponse(`OTP code sent to ${user.email}`))
         } catch (e) {
             return next(e)
         }

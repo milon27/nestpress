@@ -5,8 +5,6 @@ import { ErrorCode, StatusCode } from "../../config/constant/code.constant"
 import { createUserPayload } from "../data"
 import { TestUtil } from "../test.util"
 
-// register -> success, failed, check without ref, or with ref membership day
-
 describe("signup 🚀", () => {
     let accessToken = ""
 
@@ -33,12 +31,6 @@ describe("signup 🚀", () => {
         expect(statusCode).toBe(StatusCode.BAD_REQUEST)
     })
     it("get registered user", async () => {
-        const { statusCode, body } = await TestUtil.getLoggedInUser(supertest(app), accessToken)
-        expect(statusCode).toBe(StatusCode.OK)
-        expect(body.response).toBeDefined()
-        expect(body.response.id).toBeDefined()
-    })
-    it("get registered user with referral", async () => {
         const { statusCode, body } = await TestUtil.getLoggedInUser(supertest(app), accessToken)
         expect(statusCode).toBe(StatusCode.OK)
         expect(body.response).toBeDefined()

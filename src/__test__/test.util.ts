@@ -15,7 +15,7 @@ import { createUserPayload, loginUserPayload } from "./data"
 const createUser = async () => {
     const user = await UserService.getUserAndPermissions("email", loginUserPayload.email)
     if (user) {
-        const tokenValue = UserService.convertMemToCurrentUser(user)
+        const tokenValue = UserService.convertUserToCurrentUser(user)
         return AccessTokenUtil.generateTokens(tokenValue)
     }
     const newUser = await UserService.registerAndGetUser({

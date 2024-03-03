@@ -53,7 +53,6 @@ export const LoginRegisterController = {
                 body.provider === RegisterProvider.simple
                     ? body.user
                     : { ...body.user, password: Constant.GOOGLE_PASSWORD },
-                body.timeZone,
                 body.provider === RegisterProvider.google
             )
             if (!user) {
