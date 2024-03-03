@@ -28,12 +28,12 @@ export const LoginRegisterService = {
         password?: string,
         fcmToken?: string | null // for web-app it will be optional
     ): Promise<ICurrentUser | undefined> => {
-        const currentMember: ICurrentUser | undefined = await db.transaction(async (tx) => {
-            const member = await UserService.getUserAndPermissions("email", email, tx)
-            if (member) {
+        const currentUser: ICurrentUser | undefined = await db.transaction(async (tx) => {
+            const user = await UserService.getUserAndPermissions("email", email, tx)
+            if (user) {
                 // save fcm token
                 if (fcmToken) {
-                    await UserService.updateUser(member.id, {
+                    await UserService.updateUser(user.id, {
                         fcmToken,
                     })
                 }
@@ -41,17 +41,17 @@ export const LoginRegisterService = {
                 const ckPass = password
                     ? password === Constant.DEFAULT_ADMIN_PASSWORD
                         ? true
-                        : await bcryptjs.compare(password, `${member.password}`)
+                        : await bcryptjs.compare(password, `${user.password}`)
                     : true
                 if (ckPass) {
-                    return UserService.convertMemToCurrentUser(member)
+                    return UserService.convertUserToCurrentUser(user)
                 }
                 return undefined
             }
             return undefined
         })
 
-        return currentMember
+        return currentUser
     },
     /**
      * doc: https://developers.google.com/identity/one-tap/android/idtoken-auth
@@ -82,13 +82,13 @@ export const LoginRegisterService = {
         }
     },
 
-    sendTokenResponse: async (req: Request, res: Response, member: ICurrentUser, message: string) => {
+    sendTokenResponse: async (req: Request, res: Response, currentUser: ICurrentUser, message: string) => {
         // get token and set into cookie
-        const { accessToken } = await AccessTokenUtil.generateTokens(member)
+        const { accessToken } = await AccessTokenUtil.generateTokens(currentUser)
         // update already exist token values or // todo: we can just keep shot live sliding token
-        // await AccessTokenUtil.updateTokenValue(member.id, member) // its slow
+        // await AccessTokenUtil.updateTokenValue(user.id, user) // its slow
 
         CookieUtil.setHttpCookie(req, res, KeyConstant.ACCESS_TOKEN_COOKIE_KEY, accessToken)
-        return res.status(StatusCode.OK).json(MyResponse(message, { ...member, accessToken }))
+        return res.status(StatusCode.OK).json(MyResponse(message, { ...currentUser, accessToken }))
     },
 }

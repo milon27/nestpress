@@ -16,11 +16,11 @@ export const UserService = {
         const myDb = dbOrTx || db
         const where =
             by === "id" ? eq(UserSchema.id, sql.placeholder("id")) : eq(UserSchema.email, sql.placeholder("email"))
-        const fullMemberPrep = myDb.query.UserSchema.findFirst({
+        const fullUserPrep = myDb.query.UserSchema.findFirst({
             where,
         }).prepare()
 
-        const fullMember: IUser | undefined = await fullMemberPrep.execute(
+        const fullUser: IUser | undefined = await fullUserPrep.execute(
             by === "id"
                 ? {
                       id: identifier,
@@ -30,12 +30,12 @@ export const UserService = {
                   }
         )
 
-        if (fullMember) {
+        if (fullUser) {
             if (withPassword) {
-                return fullMember
+                return fullUser
             }
-            const { password, ...member } = fullMember
-            return member
+            const { password, ...user } = fullUser
+            return user
         }
         return undefined
     },
@@ -43,7 +43,7 @@ export const UserService = {
         const myDb = dbOrTx || db
         const where = by === "id" ? eq(UserSchema.id, identifier) : eq(UserSchema.email, identifier)
 
-        const member = await myDb.query.UserSchema.findFirst({
+        const user = await myDb.query.UserSchema.findFirst({
             where,
             columns: {
                 id: true,
@@ -53,11 +53,10 @@ export const UserService = {
             },
         })
 
-        return member
+        return user
     },
     registerAndGetUser: async (
         body: ICreateUserDto,
-        timeZone?: string,
         isEmailVerified = false
     ): Promise<ICurrentUser | undefined> => {
         // create the new user.
@@ -66,7 +65,6 @@ export const UserService = {
                 {
                     ...body,
                     isEmailVerified,
-                    timeZone,
                 },
                 tx
             )
@@ -74,7 +72,7 @@ export const UserService = {
             return data
         })
         if (user) {
-            return UserService.convertMemToCurrentUser(user)
+            return UserService.convertUserToCurrentUser(user)
         }
         return undefined
     },
@@ -113,16 +111,16 @@ export const UserService = {
         const where = by === "id" ? eq(UserSchema.id, identifier) : eq(UserSchema.email, identifier)
         await db.delete(UserSchema).where(where)
     },
-    convertMemToCurrentUser: (member: {
+    convertUserToCurrentUser: (user: {
         id: string
         password: string
         isSuperAdmin: boolean
         timeZone: string
     }) => {
         return {
-            id: member.id,
-            isSuperAdmin: member.isSuperAdmin || false,
-            timeZone: member.timeZone,
+            id: user.id,
+            isSuperAdmin: user.isSuperAdmin || false,
+            timeZone: user.timeZone,
         } satisfies ICurrentUser
     },
 }
