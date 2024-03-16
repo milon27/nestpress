@@ -62,7 +62,7 @@ export const RedisUtil = {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const old = await RedisUtil.getData<any>(key)
             const updatedValue = { ...old, ...newValue }
-            pipeline.set(key, MyJSON.stringify(updatedValue))
+            pipeline.set(key, MyJSON.stringify(updatedValue) ,"KEEPTTL")
         }
 
         // Execute the pipeline
