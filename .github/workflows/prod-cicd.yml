@@ -1,0 +1,80 @@
+name: Backend CI CD
+
+on:
+    push:
+        branches: [prod]
+
+permissions:
+    contents: write
+    packages: write
+
+env:
+    SSH_HOST: "000.000.000.000"
+    SSH_USERNAME: "root" # sometimes its ubuntu
+    SSH_PORT: "22"
+    # add the password in your github action secret
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v1
+
+            - name: Log in to GitHub Container Registry
+              uses: docker/login-action@v3
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Build and push Docker image
+              uses: docker/build-push-action@v6
+              with:
+                  context: .
+                  target: prod
+                  push: true
+                  # platforms: linux/arm64/v8 # Specify the target platform for oracle arm, default is linux/amd64
+                  tags: ghcr.io/${{ github.repository }}/np-server:latest
+
+            - name: Upload Docker Compose File
+              uses: appleboy/scp-action@v0.1.7
+              with:
+                  host: ${{ env.SSH_HOST }}
+                  username: ${{ env.SSH_USERNAME }}
+                  password: ${{ secrets.SSH_PASSWORD }}
+                  # key: ${{ secrets.SSH_PRIVATE_KEY }}
+                  port: ${{ env.SSH_PORT }}
+                  source: "docker-compose.yml" # take file from ./
+                  target: "/root" # to root folder /root
+
+    deploy:
+        runs-on: ubuntu-latest
+        needs: build
+        steps:
+            - name: Deploy via SSH
+              uses: appleboy/ssh-action@v1.0.0
+              with:
+                  host: ${{ env.SSH_HOST }}
+                  username: ${{ env.SSH_USERNAME }}
+                  password: ${{ secrets.SSH_PASSWORD }}
+                  # key: ${{ secrets.SSH_PRIVATE_KEY }}
+                  port: ${{ env.SSH_PORT }}
+                  script: |
+                      echo "run the nginx proxy manager + redis"
+                      docker compose up -d
+                      echo "sleep 2 sec."
+                      sleep 2
+                      echo "start deploying"
+                      docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+                      docker pull ghcr.io/${{ github.repository }}/np-server:latest
+                      docker stop np-server || true
+                      docker rm np-server || true
+                      echo "remove done, rerun again."
+                      docker run -d --name np-server -p 4000:4000 ghcr.io/${{ github.repository }}/np-server:latest
+                      echo "cleanup"
+                      sleep 2
+                      docker image prune --all -f

@@ -1,0 +1,33 @@
+name: Backend CI CD
+
+on:
+    push:
+        branches: [dev]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: PNPM Install
+              uses: pnpm/action-setup@v4
+              with:
+                  version: 8
+
+            - name: Deps Install
+              run: |
+                  pnpm i
+
+            - name: Lint Check
+              run: |
+                  pnpm lint:check
+
+            # - name: Test
+            #   run: |
+            #       pnpm test
+
+            - name: Build
+              run: |
+                  pnpm build
