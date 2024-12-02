@@ -3,7 +3,7 @@ declare namespace Express {
 
     export interface Request {
         user: ICurrentUser
-        agent: "android" | "browser" | "postman"
+        agent: "android" | "browser" | "postman" | "safari"
         isHttps: boolean
         accessToken?: string
     }

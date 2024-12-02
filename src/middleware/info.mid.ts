@@ -9,6 +9,8 @@ export const infoMid = (req: Request, res: Response, next: NextFunction) => {
         req.agent = "android"
     } else if (agent === "PostmanRuntime") {
         req.agent = "postman"
+    } else if (req.headers["user-agent"]?.includes("Safari")) {
+        req.agent = "safari"
     } else {
         req.agent = "browser"
     }

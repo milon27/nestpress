@@ -58,7 +58,7 @@ pnpm test
 -   run `npm run test` for integration test
 -   for testing we are using `vitest, supertest`
 
-## Generate database diagram via dbml
+## Generate Database Entity-Relationship diagram via dbml
 
 -   run `pnpm dbml:generate`
 -   copy content from `resources/dbml/schema.dbml` and put `https://dbdiagram.io/d` to visualize
