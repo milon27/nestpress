@@ -1,6 +1,6 @@
 import { ErrorRequestHandler, NextFunction, Request, Response } from "express"
-import { ErrorCode, StatusCode } from "../config/constant/code.constant"
 import { myLogger } from "../config/logger"
+import { ErrorCode, StatusCode } from "../constant/code.constant"
 import errorResponse from "../utils/error-response.util"
 import { MyErrorResponse } from "../utils/my-response.util"
 

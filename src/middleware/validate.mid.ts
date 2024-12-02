@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express"
 import { AnyZodObject, ZodTypeAny, z } from "zod"
-import { ErrorCode, StatusCode } from "../config/constant/code.constant"
 import { myLogger } from "../config/logger"
+import { ErrorCode, StatusCode } from "../constant/code.constant"
 import { MyErrorResponse } from "../utils/my-response.util"
 
 export const validateMid = ({

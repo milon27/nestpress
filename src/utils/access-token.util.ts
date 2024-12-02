@@ -1,8 +1,8 @@
 import { ICurrentUser } from "../common/model/current-user.model"
 import { ServerError, UnAuthorizedError } from "../common/model/error.model"
-import { ValidityConstant } from "../config/constant/common.constant"
-import { KeyConstant } from "../config/constant/key.constant"
 import { myLogger } from "../config/logger"
+import { ValidityConstant } from "../constant/common.constant"
+import { KeyConstant } from "../constant/key.constant"
 import { UniqueId } from "./common.util"
 import { RedisUtil } from "./redis.util"
 

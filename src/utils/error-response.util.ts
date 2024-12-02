@@ -1,7 +1,7 @@
 import { Response } from "express"
 import { QueryError } from "mysql2"
 import { ServerError } from "../common/model/error.model"
-import { ErrorCode, StatusCode } from "../config/constant/code.constant"
+import { ErrorCode, StatusCode } from "../constant/code.constant"
 import { MyErrorResponse } from "./my-response.util"
 
 const errorResponse = (res: Response, e: unknown) => {

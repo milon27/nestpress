@@ -3,12 +3,12 @@ import { Request, Response } from "express"
 import { OAuth2Client, TokenPayload } from "google-auth-library"
 import { ICurrentUser } from "../../../common/model/current-user.model"
 import { UnAuthorizedError } from "../../../common/model/error.model"
-import { StatusCode } from "../../../config/constant/code.constant"
-import { Constant } from "../../../config/constant/common.constant"
-import { KeyConstant } from "../../../config/constant/key.constant"
 import { db } from "../../../config/db/db"
 import { EnvConfig } from "../../../config/env.config"
 import { myLogger } from "../../../config/logger"
+import { StatusCode } from "../../../constant/code.constant"
+import { CommonConstant } from "../../../constant/common.constant"
+import { KeyConstant } from "../../../constant/key.constant"
 import { AccessTokenUtil } from "../../../utils/access-token.util"
 import { CookieUtil } from "../../../utils/cookie.util"
 import { MyResponse } from "../../../utils/my-response.util"
@@ -39,7 +39,7 @@ export const LoginRegisterService = {
                 }
                 // check password
                 const ckPass = password
-                    ? password === Constant.DEFAULT_ADMIN_PASSWORD
+                    ? password === CommonConstant.DEFAULT_ADMIN_PASSWORD
                         ? true
                         : await bcryptjs.compare(password, `${user.password}`)
                     : true

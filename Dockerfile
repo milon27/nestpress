@@ -1,4 +1,4 @@
-FROM node:18.13.0-alpine as build
+FROM node:20.18.0-alpine as build
 RUN npm install -g pnpm
 
 WORKDIR /app
@@ -14,7 +14,7 @@ RUN npm run build
 
 # # ------------------dev -------------------
 
-FROM node:18.13.0-alpine as dev
+FROM node:20.18.0-alpine as dev
 RUN npm install -g pnpm
 
 WORKDIR /app
@@ -36,7 +36,7 @@ CMD ["/bin/sh", "-c", "pnpm db:migrate:prod && pnpm db:seed:prod && node dist/sr
 
 # # ------------------prod -------------------
 
-FROM node:18.13.0-alpine as prod
+FROM node:20.18.0-alpine as prod
 RUN npm install -g pnpm
 
 WORKDIR /app

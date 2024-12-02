@@ -1,5 +1,6 @@
 import { z } from "zod"
-import { Constant } from "../../config/constant/common.constant"
+
+import { CommonConstant } from "../../constant/common.constant"
 import { ZodEmailString, ZodNumericString, ZodSimpleString } from "../../utils/zod.util"
 
 export const EmailParamDto = z
@@ -29,7 +30,7 @@ export type ISlugParamDto = z.infer<typeof SlugParamDto>
 export const GetAllQueryParamDto = z
     .object({
         page: ZodNumericString.optional().default("1"),
-        size: ZodNumericString.optional().default(Constant.PAGE_SIZE.toString()),
+        size: ZodNumericString.optional().default(CommonConstant.PAGE_SIZE.toString()),
     })
     .strict()
 

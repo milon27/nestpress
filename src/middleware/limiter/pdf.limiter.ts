@@ -1,6 +1,6 @@
 import rateLimit from "express-rate-limit"
-import { ErrorCode } from "../../config/constant/code.constant"
-import { ValidityConstant } from "../../config/constant/common.constant"
+import { ErrorCode } from "../../constant/code.constant"
+import { ValidityConstant } from "../../constant/common.constant"
 import { MyErrorResponse } from "../../utils/my-response.util"
 
 /**

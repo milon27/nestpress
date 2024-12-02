@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { GenderEnum } from "../../../config/db/schema/user/user.schema"
+import { GenderEnum } from "../../../config/db/schema/user.schema"
 import {
     ZodDateString,
     ZodEmailString,

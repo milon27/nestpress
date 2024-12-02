@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express"
 import { ForbiddenError } from "../common/model/error.model"
-import { KeyConstant } from "../config/constant/key.constant"
+import { KeyConstant } from "../constant/key.constant"
 import { AccessTokenUtil } from "../utils/access-token.util"
 
 const isLoggedInMid = async (req: Request, res: Response, next: NextFunction) => {

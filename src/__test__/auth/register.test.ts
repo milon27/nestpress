@@ -1,7 +1,7 @@
 import supertest from "supertest"
 import { afterAll, beforeAll, describe, expect, it } from "vitest"
 import app from "../../app"
-import { ErrorCode, StatusCode } from "../../config/constant/code.constant"
+import { ErrorCode, StatusCode } from "../../constant/code.constant"
 import { createUserPayload } from "../data"
 import { TestUtil } from "../test.util"
 

@@ -1,6 +1,6 @@
 import { format } from "date-fns"
 import { utcToZonedTime } from "date-fns-tz"
-import { Constant } from "../config/constant/common.constant"
+import { CommonConstant } from "../constant/common.constant"
 
 const DateUtil = {
     // write Util function related to dates using "date-fns" library
@@ -21,7 +21,7 @@ const DateUtil = {
      * @description get user local date based on this timezone
      * @returns e.g 24th Nov, 1st jan
      */
-    getOnlyDate: (date: Date, timeZone: string = Constant.TIMEZONE) => {
+    getOnlyDate: (date: Date, timeZone: string = CommonConstant.TIMEZONE) => {
         return format(utcToZonedTime(date, timeZone), "do MMM")
     },
     /**

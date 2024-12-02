@@ -1,7 +1,7 @@
 import supertest from "supertest"
 import { afterAll, beforeAll, describe, expect, it } from "vitest"
 import app from "../../app"
-import { StatusCode } from "../../config/constant/code.constant"
+import { StatusCode } from "../../constant/code.constant"
 import { TestUtil } from "../test.util"
 
 describe("logged in user 👤", () => {

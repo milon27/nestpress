@@ -2,7 +2,7 @@ import bcryptjs from "bcryptjs"
 import { eq, sql } from "drizzle-orm"
 import { ICurrentUser } from "../../common/model/current-user.model"
 import { IDb, db } from "../../config/db/db"
-import { ICreateUser, IUser, IUserNoPassword, UserSchema } from "../../config/db/schema/user/user.schema"
+import { ICreateUser, IUser, IUserNoPassword, UserSchema } from "../../config/db/schema/user.schema"
 import { UniqueId } from "../../utils/common.util"
 import { ICreateUserDto } from "./dto/user.dto"
 

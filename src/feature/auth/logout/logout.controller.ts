@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express"
 import { UnAuthorizedError } from "../../../common/model/error.model"
-import { StatusCode } from "../../../config/constant/code.constant"
-import { KeyConstant } from "../../../config/constant/key.constant"
 import { AccessTokenUtil } from "../../../utils/access-token.util"
 import { CookieUtil } from "../../../utils/cookie.util"
 import { MyResponse } from "../../../utils/my-response.util"
 
+import { StatusCode } from "../../../constant/code.constant"
+import { KeyConstant } from "../../../constant/key.constant"
 import { UserService } from "../../user/user.service"
 import { ILogoutDto } from "./dto/logout.dto"
 

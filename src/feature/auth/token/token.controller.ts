@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express"
-import { StatusCode } from "../../../config/constant/code.constant"
-import { ValidityConstant } from "../../../config/constant/common.constant"
-import { KeyConstant } from "../../../config/constant/key.constant"
+import { StatusCode } from "../../../constant/code.constant"
+import { ValidityConstant } from "../../../constant/common.constant"
+import { KeyConstant } from "../../../constant/key.constant"
 import { MyResponse } from "../../../utils/my-response.util"
 import { RedisUtil } from "../../../utils/redis.util"
 

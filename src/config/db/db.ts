@@ -2,9 +2,9 @@ import { drizzle } from "drizzle-orm/mysql2"
 import mysql from "mysql2/promise"
 import { EnvConfig } from "../env.config"
 
-import * as user from "./schema/user/user.schema"
+import * as user from "./schema/user.schema"
 
-const schemas = {
+export const schemas = {
     ...user,
 }
 

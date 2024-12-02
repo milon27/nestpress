@@ -1,22 +1,22 @@
 import { z } from "zod"
-import { Constant } from "../config/constant/common.constant"
+import { CommonConstant } from "../constant/common.constant"
 
 export const ZodNameString = z
     .string()
     .trim()
-    .regex(Constant.NAME_STRING, "Only Bengali or English characters, number, space are allowed")
+    .regex(CommonConstant.NAME_STRING, "Only Bengali or English characters, number, space are allowed")
     .nonempty("It's Required")
 
 export const ZodNumericString = z
     .string()
     .trim()
-    .regex(new RegExp(Constant.STRING_NUM_PATTERN), "Only number is allowed")
+    .regex(new RegExp(CommonConstant.STRING_NUM_PATTERN), "Only number is allowed")
     .nonempty("It's Required")
 
 export const ZodNumericNonNegString = z
     .string()
     .trim()
-    .regex(new RegExp(Constant.STRING_NUM_PATTERN_NON_NEG), "Only positive number is allowed")
+    .regex(new RegExp(CommonConstant.STRING_NUM_PATTERN_NON_NEG), "Only positive number is allowed")
 
 export const ZodSimpleString = z.string().trim().nonempty("It's Required")
 

@@ -4,8 +4,8 @@
 /* eslint-disable no-console */
 import { sql } from "drizzle-orm"
 import { MySqlQueryResult } from "drizzle-orm/mysql2"
-import { KeyConstant } from "../config/constant/key.constant"
 import { db } from "../config/db/db"
+import { KeyConstant } from "../constant/key.constant"
 import { UserService } from "../feature/user/user.service"
 import { AccessTokenUtil } from "../utils/access-token.util"
 import { RedisUtil } from "../utils/redis.util"

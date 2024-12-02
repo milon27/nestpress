@@ -1,4 +1,4 @@
-import { Constant } from "../config/constant/common.constant"
+import { CommonConstant } from "../constant/common.constant"
 import { ILoginWithEmailDto } from "../feature/auth/login-register/dto/login.dto"
 import { IRegisterDto, RegisterProvider } from "../feature/auth/login-register/dto/register.dto"
 
@@ -12,6 +12,6 @@ export const createUserPayload: IRegisterDto = {
     user: {
         ...loginUserPayload,
         fullName: "test",
-        timeZone: Constant.TIMEZONE,
+        timeZone: CommonConstant.TIMEZONE,
     },
 }

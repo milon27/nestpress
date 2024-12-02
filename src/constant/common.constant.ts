@@ -1,6 +1,6 @@
-import { EnvConfig } from "../env.config"
+import { EnvConfig } from "../config/env.config"
 
-export const Constant = {
+export const CommonConstant = {
     DEFAULT_PASSWORD: "123456",
     GOOGLE_PASSWORD: "nestpress1234",
     DEFAULT_ADMIN_PASSWORD: "nestpress1234",

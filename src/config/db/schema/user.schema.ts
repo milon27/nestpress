@@ -1,6 +1,6 @@
 import { sql } from "drizzle-orm"
 import { boolean, datetime, mysqlEnum, mysqlTable, varchar } from "drizzle-orm/mysql-core"
-import { Constant } from "../../../constant/common.constant"
+import { CommonConstant } from "../../../constant/common.constant"
 
 export const GenderEnum = ["male", "female"] as const
 export type IGenderEnum = (typeof GenderEnum)[number]
@@ -23,7 +23,7 @@ export const UserSchema = mysqlTable("user_table", {
     zipCode: varchar("zip_code", { length: 50 }),
     address: varchar("address", { length: 255 }),
     // extra info
-    timeZone: varchar("time_zone", { length: 50 }).notNull().default(Constant.TIMEZONE),
+    timeZone: varchar("time_zone", { length: 50 }).notNull().default(CommonConstant.TIMEZONE),
     fcmToken: varchar("fcm_token", { length: 255 }),
     lastLoggedIn: datetime("last_logged_in")
         .default(sql`(CURRENT_TIMESTAMP)`)

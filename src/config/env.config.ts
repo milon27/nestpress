@@ -8,10 +8,14 @@ import path from "path"
 
 const initEnvConfig = () => {
     if (!process.env.parsed) {
-        const envPath = process.env.NODE_ENV ? `.env.${process.env.NODE_ENV}` : ".env"
+        // const envPath = process.env.NODE_ENV ? `.env.${process.env.NODE_ENV}` : ".env"
+        const envPath = ".env"
         const envFullPath = path.resolve(envPath)
 
         try {
+            if (!fs.existsSync(envFullPath)) {
+                throw new Error(".env not found! rename .env.dev and create .env, update db url etc.")
+            }
             fs.accessSync(envFullPath, fs.constants.R_OK)
             console.debug("init", envPath)
             dotenv.config({ path: envFullPath })

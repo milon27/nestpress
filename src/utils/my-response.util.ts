@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { ErrorCode, StatusCode } from "../config/constant/code.constant"
+import { ErrorCode, StatusCode } from "../constant/code.constant"
 
 export const MyResponse = <T>(message: string, response?: T, statusCode = StatusCode.OK) => {
     return {

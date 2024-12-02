@@ -1,9 +1,9 @@
 // used for reset password+email verification
 import rateLimit from "express-rate-limit"
 import RedisStore from "rate-limit-redis"
-import { ErrorCode } from "../../config/constant/code.constant"
-import { ValidityConstant } from "../../config/constant/common.constant"
 import { redisClient } from "../../config/redis/redis.config"
+import { ErrorCode } from "../../constant/code.constant"
+import { ValidityConstant } from "../../constant/common.constant"
 import { MyErrorResponse } from "../../utils/my-response.util"
 
 /**

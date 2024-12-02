@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express"
 import { ForbiddenError, UnAuthorizedError } from "../../common/model/error.model"
-import { StatusCode } from "../../config/constant/code.constant"
+import { StatusCode } from "../../constant/code.constant"
 import { MyResponse } from "../../utils/my-response.util"
 import { IUpdateUserDto } from "./dto/user.dto"
 import { UserService } from "./user.service"

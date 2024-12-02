@@ -1,8 +1,8 @@
 import supertest from "supertest"
 import { afterAll, beforeAll, describe, expect, it } from "vitest"
 import app from "../../app"
-import { StatusCode } from "../../config/constant/code.constant"
-import { Constant } from "../../config/constant/common.constant"
+import { StatusCode } from "../../constant/code.constant"
+import { CommonConstant } from "../../constant/common.constant"
 import { createUserPayload } from "../data"
 import { TestUtil } from "../test.util"
 
@@ -44,7 +44,7 @@ describe("login 🎇", () => {
     it("given admin credentials", async () => {
         const { statusCode, body } = await supertest(app).post("/v1/auth/login-with-email").send({
             email: createUserPayload.user.email,
-            password: Constant.DEFAULT_ADMIN_PASSWORD,
+            password: CommonConstant.DEFAULT_ADMIN_PASSWORD,
         })
         expect(statusCode).toBe(StatusCode.OK)
         expect(body.response.accessToken).toBeDefined()

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express"
 import { NotFoundError, ServerError } from "../../../common/model/error.model"
-import { ErrorCode, StatusCode } from "../../../config/constant/code.constant"
-import { Constant } from "../../../config/constant/common.constant"
+import { ErrorCode, StatusCode } from "../../../constant/code.constant"
+import { CommonConstant } from "../../../constant/common.constant"
 import { MyResponse } from "../../../utils/my-response.util"
 import { UserService } from "../../user/user.service"
 import { ILoginWithEmailDto, ILoginWithGoogleDto } from "./dto/login.dto"
@@ -52,7 +52,7 @@ export const LoginRegisterController = {
             const user = await UserService.registerAndGetUser(
                 body.provider === RegisterProvider.simple
                     ? body.user
-                    : { ...body.user, password: Constant.GOOGLE_PASSWORD },
+                    : { ...body.user, password: CommonConstant.GOOGLE_PASSWORD },
                 body.provider === RegisterProvider.google
             )
             if (!user) {

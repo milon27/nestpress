@@ -30,7 +30,7 @@ npx nestpress@latest module category blog
     ```bash
 
     pnpm i
-    # rename .env.dev (if available) to .env then update db connection string (DATABASE_URL) and other env variable if needed
+    # rename .env.dev to .env then update db connection string (DATABASE_URL) and other env variable if needed
     pnpm: db:migrate
 
     # reload / reopen vscode to restart TS server

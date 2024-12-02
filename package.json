@@ -9,7 +9,8 @@
         "build": "tsc --outDir dist",
         "lint": "npx eslint . --fix",
         "lint:check": "npx eslint .",
-        "test": "cross-env NODE_ENV=test npm run db:clean && cross-env NODE_ENV=test npm run db:seed && cross-env NODE_ENV=test vitest --config ./vitest.config.mjs",
+        "test": "cross-env NODE_ENV=test npm run db:migrate && cross-env NODE_ENV=test npm run db:clean && cross-env NODE_ENV=test npm run db:seed && cross-env NODE_ENV=test vitest --config ./vitest.config.mjs",
+        "dbml:generate": "ts-node src/config/db/utils/dbml.ts",
         "db:generate": "drizzle-kit generate:mysql",
         "db:rollback": "drizzle-kit drop --config=drizzle.config.ts",
         "db:migrate": "ts-node --files src/config/db/utils/migrator.ts",
@@ -21,8 +22,7 @@
         "db:all:clean": "pnpm db:clean && pnpm redis:clean && pnpm db:seed",
         "np": "nestpress ",
         "version:inc": "npm version patch --no-git-tag-version && git add .",
-        "all:update": "pnpm update -i -L",
-        "prepare": "husky install"
+        "all:update": "pnpm update -i -L"
     },
     "keywords": [
         "express",
@@ -71,6 +71,7 @@
         "@typescript-eslint/parser": "7.1.0",
         "cross-env": "7.0.3",
         "drizzle-kit": "0.20.14",
+        "drizzle-dbml-generator": "0.9.0",
         "eslint": "8.57.0",
         "eslint-config-airbnb-base": "15.0.0",
         "eslint-config-airbnb-typescript": "18.0.0",
