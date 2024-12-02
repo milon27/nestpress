@@ -43,7 +43,7 @@ npx nestpress@latest module category blog
 ## Update npm dependencies
 
 ```bash
-# Updates all dependencies in package.json
+# Updates all dependencies in package.json (not important, it might break the project)
 pnpm all:update
 
 # run test to check the app is working fine or not
@@ -58,11 +58,16 @@ pnpm test
 -   run `npm run test` for integration test
 -   for testing we are using `vitest, supertest`
 
+## Generate database diagram via dbml
+
+-   run `pnpm dbml:generate`
+-   copy content from `resources/dbml/schema.dbml` and put `https://dbdiagram.io/d` to visualize
+
 ## API endpoints and doc
 
 -   BASE url: http://localhost:4000/v1
 -   Swagger Doc url: [Not Implemented]
--   in `.doc` folder a postman json file `postman-collection.json` is available import it on your postman
+-   in `.doc` folder a postman json file `postman-collection.json` is available import it on your postman, or maybe there is live link just open that login into your postman and export collection.
     -   you need add an environment in postman with variable `url=http://localhost:4000`
 
 ## Code Snippet on vscode
