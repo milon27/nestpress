@@ -9,6 +9,8 @@ services:
             - REDIS_PASSWORD=1234567
         ports:
             - 6379:6379
+        networks:
+            - np_network
 
     nginx_proxy:
         container_name: nginx_proxy
@@ -21,6 +23,12 @@ services:
         volumes:
             - ./data:/data
             - ./letsencrypt:/etc/letsencrypt
-
+        networks:
+            - np_network
 volumes:
     redis_vol:
+
+networks:
+    np_network:
+        name: np_network
+        driver: bridge
