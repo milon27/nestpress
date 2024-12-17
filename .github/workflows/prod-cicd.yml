@@ -74,7 +74,7 @@ jobs:
                       docker stop np-server || true
                       docker rm np-server || true
                       echo "remove done, rerun again."
-                      docker run -d --name np-server --network np_network -p 4000:4000 ghcr.io/${{ github.repository }}/np-server:latest
+                      docker run -d --name np-server --restart unless-stopped --network np_network -p 4000:4000 ghcr.io/${{ github.repository }}/np-server:latest
                       echo "cleanup"
                       sleep 2
                       docker image prune --all -f

@@ -2,7 +2,7 @@ services:
     redis:
         container_name: redis
         image: redis:7.4.1-alpine
-        restart: always
+        restart: unless-stopped
         volumes:
             - redis_vol:/data
         environment:
