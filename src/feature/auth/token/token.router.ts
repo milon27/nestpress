@@ -2,6 +2,9 @@ import { Router } from "express"
 import { AuthMid } from "../../../middleware/auth.mid"
 import { TokenController } from "./token.controller"
 
+/**
+ * @deprecated
+ */
 const TokenRouter = Router()
 
 TokenRouter.use(AuthMid.isLoggedInMid)

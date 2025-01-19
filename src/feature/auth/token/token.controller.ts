@@ -5,6 +5,9 @@ import { KeyConstant } from "../../../constant/key.constant"
 import { MyResponse } from "../../../utils/my-response.util"
 import { RedisUtil } from "../../../utils/redis.util"
 
+/**
+ * @deprecated
+ */
 export const TokenController = {
     verifyToken: async (req: Request, res: Response, next: NextFunction) => {
         try {
