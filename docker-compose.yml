@@ -7,6 +7,7 @@ services:
             - redis_vol:/data
         environment:
             - REDIS_PASSWORD=1234567
+        command: ["redis-server", "--requirepass", "1234567"]
         ports:
             - 6379:6379
         networks:
