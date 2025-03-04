@@ -20,7 +20,7 @@ RUN npm install -g pnpm
 WORKDIR /app
 
 # (set in docker compose file)
-COPY --from=build /app/.env ./.env
+COPY --from=build /app/.env.dev ./.env
 COPY --from=build /app/package.json .
 COPY --from=build /app/pnpm-lock.yaml .
 COPY --from=build /app/resources ./resources
