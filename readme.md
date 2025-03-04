@@ -18,12 +18,15 @@ npx nestpress@latest module category blog
 # for more use of nestpress cli checkout this: https://www.npmjs.com/package/nestpress
 ```
 
-## How to run
+## How to run with docker
 
 -   make sure you have [docker](https://www.docker.com/products/docker-desktop/) and [pnpm](https://pnpm.io/) install on your system as node package manager
 -   run mysql database and redis on docker(you should have docker install on your machine)
 
-    -   run `docker compose up` this will run the database and redis on docker[use git-bash terminal in windows or for mac/linux default terminal is fine]
+    -   run `docker compose -f docker-compose.local.yml up --build` this will run the api server, database and redis on docker[use git-bash terminal in windows or for mac/linux default terminal is fine]
+    -   you can view the server on `http://localhost:4000`
+
+## How to run without docker
 
 -   install all dependencies and run the app
 
