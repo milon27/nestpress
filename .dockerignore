@@ -7,5 +7,5 @@ Dockerfile
 /uploads
 
 # .envs
-.env
+# .env
 # .env.prod and account json for firebase should be allowed to copy into container otherwise how it will run

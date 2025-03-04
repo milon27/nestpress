@@ -1,19 +1,19 @@
 services:
-    mysql:
-        container_name: mysql
-        image: mysql:8.0.33
-        restart: always
-        environment:
-            - MYSQL_ROOT_PASSWORD=myPassWord
-            - MYSQL_DATABASE=test
-        ports:
-            - 3308:3306
-        volumes:
-            - db_vol:/var/lib/mysql
-            # - .backup-db:/docker-entrypoint-initdb.d
+    # mysql:
+    #     container_name: mysql
+    #     image: mysql:8.0.33
+    #     restart: always
+    #     environment:
+    #         - MYSQL_ROOT_PASSWORD=myPassWord
+    #         - MYSQL_DATABASE=test
+    #     ports:
+    #         - 3308:3306
+    #     volumes:
+    #         - db_vol:/var/lib/mysql
+    # - .backup-db:/docker-entrypoint-initdb.d
 
-    redis:
-        container_name: redis
+    np_redis:
+        container_name: np_redis
         image: redis:7.4.1-alpine
         restart: always
         volumes:
@@ -21,10 +21,14 @@ services:
         environment:
             - REDIS_PASSWORD=1234567
         ports:
-            - 6379:6379
+            - 6380:6379
+        networks:
+            - np_network
 
-    api:
-        container_name: api
+    np_api:
+        container_name: np_api
+        depends_on:
+            - np_redis
         build:
             context: .
             dockerfile: Dockerfile
@@ -32,7 +36,14 @@ services:
         restart: always
         ports:
             - 4000:4000
+        networks:
+            - np_network
 
 volumes:
     db_vol:
     redis_vol:
+
+networks:
+    np_network:
+        name: np_network
+        driver: bridge
