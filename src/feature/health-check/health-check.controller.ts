@@ -12,9 +12,7 @@ import { RedisUtil } from "../../utils/redis.util"
 export const HealthCheckController = {
     getBasicInfo: (req: Request, res: Response) => {
         if (EnvConfig.NODE_ENV) {
-            res.send(
-                `Running app in ${EnvConfig.NODE_ENV} , https:${req.isHttps}, TZ:${EnvConfig.TZ || "UTC"}... 🚀`
-            )
+            res.send(`Running app in ${EnvConfig.NODE_ENV} , TZ:${EnvConfig.TZ || "UTC"}... 🚀`)
         } else {
             res.status(StatusCode.SERVER_ERROR).send("something went wrong")
         }

@@ -3,7 +3,7 @@ import { EnvConfig } from "../config/env.config"
 
 export const CookieUtil = {
     setHttpCookie: (req: Request, res: Response, key: string, value: string) => {
-        res.cookie(key, value, CookieUtil.getSessionCookieOption(req.isHttps, req.agent))
+        res.cookie(key, value)
     },
     clearCookies: (res: Response, keys: string[]) => {
         keys.forEach((key) => {

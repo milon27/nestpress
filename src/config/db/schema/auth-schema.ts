@@ -17,6 +17,7 @@ export const user = mysqlTable("user", {
         .$defaultFn(() => "user")
         .notNull(),
 })
+export type IUser = typeof user.$inferSelect
 
 export const session = mysqlTable("session", {
     id: varchar("id", { length: 36 }).primaryKey(),
