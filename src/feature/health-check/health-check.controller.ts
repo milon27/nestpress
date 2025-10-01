@@ -1,7 +1,6 @@
 import { sql } from "drizzle-orm"
 import { Request, Response } from "express"
 import { DbService } from "../../common/module/db/db.service"
-import { FCMService } from "../../common/module/fcm/fcm.service"
 import { db } from "../../config/db/db"
 import { EnvConfig } from "../../config/env.config"
 import { myLogger } from "../../config/logger"
@@ -61,24 +60,7 @@ export const HealthCheckController = {
             )
         }
     },
-    fcmCheck: async (req: Request, res: Response) => {
-        try {
-            const { token, title, body, fcmType } = req.body
-            // const fcmType = "token" | "topic"
-            await FCMService.sendPushNotification(
-                fcmType,
-                [token],
-                title || "random title",
-                body || "its a random body"
-            )
-            res.status(StatusCode.OK).send(MyResponse("fcm notification sent", token))
-        } catch (e) {
-            myLogger().error(e)
-            res.status(StatusCode.SERVER_ERROR).send(
-                MyErrorResponse(ErrorCode.SERVER_ERROR, `fcm not working ${(e as Error).message}`)
-            )
-        }
-    },
+
     logger: (req: Request, res: Response) => {
         myLogger().info("this is a info")
         myLogger().error("this is a error custom message", new Error("test error"))
