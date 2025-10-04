@@ -1,9 +1,9 @@
 import { myLogger } from "../../logger"
-import { redisClient } from "../redis.config"
 
 export const cleanRedis = async () => {
     try {
-        await redisClient.flushdb()
+        //! if app require redis, then uncomment this code. then use redis in other place
+        // await redisClient.flushdb()
         myLogger().info("redis cleaned successfully.")
         process.exit(0)
     } catch (error) {

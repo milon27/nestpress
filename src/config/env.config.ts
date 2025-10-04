@@ -45,7 +45,6 @@ export const EnvConfig = {
     REDIS_CLUSTER_URLS: process.env.REDIS_CLUSTER_URLS,
     REDIS_CLUSTER_PORT: process.env.REDIS_CLUSTER_PORT,
     ACCESS_TOKEN_VALIDITY: process.env.ACCESS_TOKEN_VALIDITY,
-    ENABLE_SOCKET: process.env.ENABLE_SOCKET,
     LOKI_HOST: process.env.LOKI_HOST,
     LOKI_AUTH: process.env.LOKI_AUTH,
     SMTP_HOST: process.env.SMTP_HOST,
@@ -53,8 +52,8 @@ export const EnvConfig = {
     SMTP_USER: process.env.SMTP_USER,
     SMTP_PASSWORD: process.env.SMTP_PASSWORD,
     SMTP_EMAIL_FROM: process.env.SMTP_EMAIL_FROM,
-    G_WEB_CLIENT_ID: process.env.G_WEB_CLIENT_ID,
-    G_ANDROID_CLIENT_ID: process.env.G_ANDROID_CLIENT_ID,
-    G_IOS_CLIENT_ID: process.env.G_IOS_CLIENT_ID,
-    G_SECRET_ID: process.env.G_SECRET_ID,
+
+    BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
+    BETTER_AUTH_TRUSTED_ORIGINS: process.env.BETTER_AUTH_TRUSTED_ORIGINS,
+    BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
 }

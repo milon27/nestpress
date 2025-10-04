@@ -7,14 +7,11 @@ import { myLogger } from "../../config/logger"
 import { ErrorCode, StatusCode } from "../../constant/code.constant"
 import { CommonUtil } from "../../utils/common.util"
 import { MyErrorResponse, MyResponse } from "../../utils/my-response.util"
-import { RedisUtil } from "../../utils/redis.util"
 
 export const HealthCheckController = {
     getBasicInfo: (req: Request, res: Response) => {
         if (EnvConfig.NODE_ENV) {
-            res.send(
-                `Running app in ${EnvConfig.NODE_ENV} , https:${req.isHttps}, TZ:${EnvConfig.TZ || "UTC"}... 🚀`
-            )
+            res.send(`Running app in ${EnvConfig.NODE_ENV} , TZ:${EnvConfig.TZ || "UTC"}... 🚀`)
         } else {
             res.status(StatusCode.SERVER_ERROR).send("something went wrong")
         }
@@ -23,12 +20,14 @@ export const HealthCheckController = {
         try {
             // db check
             const dbResult = await DbService.executeRaw<{ time: string }>(db, sql`select now() as time;`)
+            //! if app require redis, then uncomment this code. then use redis in other place
             // redis check
-            await RedisUtil.setData("example-test-redis", "redis working", 30)
-            const redisResult = await RedisUtil.getData("example-test-redis")
+            // await RedisUtil.setData("example-test-redis", "redis working", 30)
+            // const redisResult = await RedisUtil.getData("example-test-redis")
             // env check
             const envResult = EnvConfig.NODE_ENV
-            res.status(StatusCode.OK).send(MyResponse("health-check", { dbResult, redisResult, envResult }))
+            res.status(StatusCode.OK).send(MyResponse("health-check", { dbResult, envResult }))
+            // res.status(StatusCode.OK).send(MyResponse("health-check", { dbResult, redisResult, envResult }))
         } catch (e) {
             res.status(StatusCode.SERVER_ERROR).send(
                 MyErrorResponse(ErrorCode.SERVER_ERROR, `health-check error ${(e as Error).message}`)
@@ -47,9 +46,11 @@ export const HealthCheckController = {
     },
     redisConnectionCheck: async (req: Request, res: Response) => {
         try {
-            await RedisUtil.setData("example-test-redis", "redis working", 30)
-            const result = await RedisUtil.getData("example-test-redis")
-            res.status(StatusCode.OK).send(MyResponse("redis connected", result))
+            //! if app require redis, then uncomment this code. then use redis in other place
+            // await RedisUtil.setData("example-test-redis", "redis working", 30)
+            // const result = await RedisUtil.getData("example-test-redis")
+            // res.status(StatusCode.OK).send(MyResponse("redis connected", result))
+            res.status(StatusCode.OK).send(MyResponse("redis isn't connected on this server", false))
         } catch (e) {
             myLogger().error(e)
             res.status(StatusCode.SERVER_ERROR).send(

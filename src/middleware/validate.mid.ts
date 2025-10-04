@@ -21,14 +21,11 @@ export const validateMid = ({
     return (req: Request, res: Response, next: NextFunction) => {
         try {
             const reqObjCk = schema.safeParse({
-                body: req.body,
-                query: req.query,
-                params: req.params,
+                body: req.body || {}, //* The req.body property returns undefined when the body has not been parsed. In Express 4, it returns {} by default.
+                query: req.query || {},
+                params: req.params || {},
             })
             if (reqObjCk.success) {
-                req.query = reqObjCk.data.query
-                req.body = reqObjCk.data.body
-                req.params = reqObjCk.data.params
                 return next()
             }
 
