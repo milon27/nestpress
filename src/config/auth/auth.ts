@@ -2,6 +2,7 @@ import { betterAuth } from "better-auth"
 import { drizzleAdapter } from "better-auth/adapters/drizzle"
 import { openAPI } from "better-auth/plugins"
 import { db } from "../db/db"
+import { EnvConfig } from "../env.config"
 
 export const auth = betterAuth({
     database: drizzleAdapter(db, {
@@ -14,6 +15,9 @@ export const auth = betterAuth({
                 defaultValue: "user",
             },
         },
+        changeEmail: {
+            enabled: true,
+        },
     },
     telemetry: {
         enabled: false,
@@ -24,5 +28,5 @@ export const auth = betterAuth({
     plugins: [
         openAPI(), // http://localhost:4000/api/auth/reference
     ],
-    trustedOrigins: ["http://localhost:3000"],
+    trustedOrigins: EnvConfig.BETTER_AUTH_TRUSTED_ORIGINS?.split(",") || ["http://localhost:3000"],
 })

@@ -8,6 +8,7 @@ import { toNodeHandler } from "better-auth/node"
 import { auth } from "./config/auth/auth"
 import v1RouterConfig from "./config/router/v1-router.config"
 import { globalErrorMid, notFoundMid } from "./middleware/error.mid"
+import { infoMid } from "./middleware/info.mid"
 import { globalRateLimiter } from "./middleware/limiter/global-rete.limiter"
 import { loggerMid } from "./middleware/logger.mid"
 
@@ -24,7 +25,7 @@ app.use(cookieParser())
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(cors({ origin: true, credentials: true }))
-app.use([loggerMid])
+app.use([infoMid, loggerMid])
 
 // routers
 app.use("/v1", v1RouterConfig)

@@ -7,7 +7,6 @@ import { MySqlQueryResult } from "drizzle-orm/mysql2"
 import { auth } from "../config/auth/auth"
 import { db } from "../config/db/db"
 import { user as UserSchema } from "../config/db/schema/auth-schema"
-import { RedisUtil } from "../utils/redis.util"
 import { createUserPayload, loginUserPayload } from "./data"
 
 // create a user and get tokens
@@ -56,7 +55,8 @@ const truncateTables = async () => {
 // clean db + clean redis
 const cleanDbAndRedis = async () => {
     await truncateTables() // this will clear the whole db except the plan table
-    await RedisUtil.clear()
+    //! if app require redis, then uncomment this code. then use redis in other place
+    // await RedisUtil.clear()
 }
 
 const getLoggedInUser = async (request: any, accessToken: string) => {

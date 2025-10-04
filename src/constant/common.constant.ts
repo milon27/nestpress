@@ -2,7 +2,6 @@ import { EnvConfig } from "../config/env.config"
 
 export const CommonConstant = {
     DEFAULT_PASSWORD: "12345678",
-    GOOGLE_PASSWORD: "nestpress1234",
     DEFAULT_ADMIN_PASSWORD: "12345678",
     EMPTY: "EMPTY",
     CURRENCY: "usd",

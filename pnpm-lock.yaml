@@ -30,8 +30,8 @@ dependencies:
     specifier: 17.2.3
     version: 17.2.3
   drizzle-orm:
-    specifier: 0.44.5
-    version: 0.44.5(mysql2@3.15.1)
+    specifier: 0.44.6
+    version: 0.44.6(mysql2@3.15.1)
   express:
     specifier: 5.1.0
     version: 5.1.0
@@ -99,7 +99,7 @@ devDependencies:
     version: 10.1.0
   drizzle-dbml-generator:
     specifier: 0.10.0
-    version: 0.10.0(drizzle-orm@0.44.5)
+    version: 0.10.0(drizzle-orm@0.44.6)
   drizzle-kit:
     specifier: 0.31.5
     version: 0.31.5
@@ -1381,7 +1381,7 @@ packages:
     cpu: [wasm32]
     requiresBuild: true
     dependencies:
-      '@napi-rs/wasm-runtime': 1.0.5
+      '@napi-rs/wasm-runtime': 1.0.6
     dev: false
     optional: true
 
@@ -1412,8 +1412,8 @@ packages:
     dev: false
     optional: true
 
-  /@napi-rs/wasm-runtime@1.0.5:
-    resolution: {integrity: sha512-TBr9Cf9onSAS2LQ2+QHx6XcC6h9+RIzJgbqG3++9TUZSH204AwEy5jg3BTQ0VATsyoGj4ee49tN/y6rvaOOtcg==}
+  /@napi-rs/wasm-runtime@1.0.6:
+    resolution: {integrity: sha512-DXj75ewm11LIWUk198QSKUTxjyRjsBwk09MuMk5DGK+GDUtyPhhEHOGP/Xwwj3DjQXXkivoBirmOnKrLfc0+9g==}
     requiresBuild: true
     dependencies:
       '@emnapi/core': 1.5.0
@@ -3083,12 +3083,12 @@ packages:
     engines: {node: '>=12'}
     dev: false
 
-  /drizzle-dbml-generator@0.10.0(drizzle-orm@0.44.5):
+  /drizzle-dbml-generator@0.10.0(drizzle-orm@0.44.6):
     resolution: {integrity: sha512-cMZq9E3U3RlmE0uBeXyc6oWJ0royOkC6HiTlc9LDeMe+W87poZTzKoNYUyAxZrs4Q1RQtob+cGKiefV4ZoI8HA==}
     peerDependencies:
       drizzle-orm: '>=0.36.0'
     dependencies:
-      drizzle-orm: 0.44.5(mysql2@3.15.1)
+      drizzle-orm: 0.44.6(mysql2@3.15.1)
     dev: true
 
   /drizzle-kit@0.31.5:
@@ -3103,8 +3103,8 @@ packages:
       - supports-color
     dev: true
 
-  /drizzle-orm@0.44.5(mysql2@3.15.1):
-    resolution: {integrity: sha512-jBe37K7d8ZSKptdKfakQFdeljtu3P2Cbo7tJoJSVZADzIKOBo9IAJPOmMsH2bZl90bZgh8FQlD8BjxXA/zuBkQ==}
+  /drizzle-orm@0.44.6(mysql2@3.15.1):
+    resolution: {integrity: sha512-uy6uarrrEOc9K1u5/uhBFJbdF5VJ5xQ/Yzbecw3eAYOunv5FDeYkR2m8iitocdHBOHbvorviKOW5GVw0U1j4LQ==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
       '@cloudflare/workers-types': '>=4'

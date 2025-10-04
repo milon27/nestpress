@@ -4,5 +4,7 @@ declare namespace Express {
     export interface Request {
         user: IUser
         token: string
+        agent: "android" | "browser" | "postman"
+        isHttps: boolean
     }
 }
