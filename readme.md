@@ -1,5 +1,7 @@
 # Nestpress boilerplate with Authentication module
 
+### this `v1-with-everything` branch contain older version of packages but it contain firebase config, web socket config, redis config etc. main drawback is it has manull auth instead of better auth.
+
 ## How to use this template using [nestpress cli](https://www.npmjs.com/package/nestpress).
 
 ```bash
