@@ -59,10 +59,8 @@ const cleanDbAndRedis = async () => {
     // await RedisUtil.clear()
 }
 
-const getLoggedInUser = async (request: any, accessToken: string) => {
-    const res = await request
-        .get("/api/auth/get-session")
-        .set("Cookie", `better-auth.session_token=${accessToken}`)
+const getLoggedInUser = async (request: any, cookie: string) => {
+    const res = await request.get("/api/auth/get-session").set("Cookie", `${cookie}`)
 
     return {
         statusCode: res.status,
