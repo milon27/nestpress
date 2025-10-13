@@ -1,34 +1,46 @@
-/* eslint-disable no-plusplus */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable no-console */
+import cookie from "cookie"
 import { eq, sql } from "drizzle-orm"
 import { MySqlQueryResult } from "drizzle-orm/mysql2"
 import { auth } from "../config/auth/auth"
 import { db } from "../config/db/db"
 import { user as UserSchema } from "../config/db/schema/auth-schema"
+import { RedisUtil } from "../utils/redis/redis.util"
 import { createUserPayload, loginUserPayload } from "./data"
 
+const parseTokenFromCookie = (setCookie: string, tokenName = "better-auth.session_token") => {
+    const parsedCookies = cookie.parse(setCookie)
+    const sessionToken = parsedCookies[tokenName]
+    return sessionToken || "invalid token"
+}
+
+const setTokenInRequest = (request: any, accessToken: string, tokenName = "better-auth.session_token") => {
+    return request.set("Cookie", `${tokenName}=${accessToken}`)
+}
+
 // create a user and get tokens
-const createUser = async () => {
+const createUser = async (request: any) => {
     const user = await db.query.user.findFirst({
         where: eq(UserSchema.email, loginUserPayload.email),
     })
-    if (user) {
-        const login = await auth.api.signInEmail({
+    let accessToken = ""
+    if (!user) {
+        await auth.api.signUpEmail({
             body: {
-                email: loginUserPayload.email,
-                password: loginUserPayload.password,
+                ...createUserPayload,
             },
         })
-        return login.token
     }
-    const newUser = await auth.api.signUpEmail({
-        body: {
-            ...createUserPayload,
-        },
+
+    const res = await request.post("/api/auth/sign-in/email").send({
+        email: loginUserPayload.email,
+        password: loginUserPayload.password,
     })
-    return newUser.token
+    // Parse cookies from the Set-Cookie header
+    const setCookie = res.headers["set-cookie"][0]
+    // console.log("setCookie: ", setCookie)
+    accessToken = parseTokenFromCookie(setCookie)
+
+    return accessToken
 }
 
 const truncateTables = async () => {
@@ -55,12 +67,11 @@ const truncateTables = async () => {
 // clean db + clean redis
 const cleanDbAndRedis = async () => {
     await truncateTables() // this will clear the whole db except the plan table
-    //! if app require redis, then uncomment this code. then use redis in other place
-    // await RedisUtil.clear()
+    await RedisUtil.clear() // this will clear the whole redis
 }
 
-const getLoggedInUser = async (request: any, cookie: string) => {
-    const res = await request.get("/api/auth/get-session").set("Cookie", `${cookie}`)
+const getLoggedInUser = async (request: any, accessToken: string) => {
+    const res = await setTokenInRequest(request.get("/api/auth/get-session"), accessToken)
 
     return {
         statusCode: res.status,
@@ -69,6 +80,8 @@ const getLoggedInUser = async (request: any, cookie: string) => {
 }
 
 export const TestUtil = {
+    setTokenInRequest,
+    parseTokenFromCookie,
     getLoggedInUser,
     createUser,
     cleanDbAndRedis,

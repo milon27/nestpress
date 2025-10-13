@@ -1,5 +1,3 @@
-/* eslint-disable max-classes-per-file */
-
 import { ErrorCode, StatusCode } from "../../constant/code.constant"
 
 export class ServerError extends Error {

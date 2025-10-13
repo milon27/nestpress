@@ -27,5 +27,4 @@ export const truncateTables = async () => {
     }
 }
 
-// eslint-disable-next-line no-void
 void truncateTables()

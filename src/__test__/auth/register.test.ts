@@ -9,7 +9,9 @@ describe("signup 🚀", () => {
     let accessToken = ""
 
     beforeAll(async () => {
+        console.log("========= signup 🚀 ========")
         // nothing need to do
+        await TestUtil.cleanDbAndRedis()
     })
     afterAll(async () => {
         await TestUtil.cleanDbAndRedis()
@@ -17,18 +19,20 @@ describe("signup 🚀", () => {
 
     it("given invalid user payload", async () => {
         const { statusCode } = await supertest(app).post("/api/auth/sign-up/email").send({})
-        console.log("statusCode", statusCode)
-
         expect(statusCode).toBe(StatusCode.BAD_REQUEST)
     })
     it("given valid user payload", async () => {
-        const { statusCode, body } = await supertest(app).post("/api/auth/sign-up/email").send(createUserPayload)
+        const { statusCode, body, headers } = await supertest(app)
+            .post("/api/auth/sign-up/email")
+            .send(createUserPayload)
         expect(statusCode).toBe(StatusCode.OK)
         expect(body.token).toBeDefined()
-        accessToken = body.token
+        // Parse cookies from the Set-Cookie header
+        const setCookie = headers["set-cookie"][0]
+        accessToken = TestUtil.parseTokenFromCookie(setCookie) || "invalid token"
     })
     it("given same user payload", async () => {
-        const { statusCode, body } = await supertest(app).post("/api/auth/sign-up/email").send(createUserPayload)
+        const { statusCode } = await supertest(app).post("/api/auth/sign-up/email").send(createUserPayload)
         expect(statusCode).toBe(StatusCode.UNPROCESSABLE_ENTITY)
     })
     it("get registered user", async () => {

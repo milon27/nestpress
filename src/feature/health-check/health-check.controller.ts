@@ -44,7 +44,7 @@ export const HealthCheckController = {
             )
         }
     },
-    redisConnectionCheck: async (req: Request, res: Response) => {
+    redisConnectionCheck: (req: Request, res: Response) => {
         try {
             //! if app require redis, then uncomment this code. then use redis in other place
             // await RedisUtil.setData("example-test-redis", "redis working", 30)

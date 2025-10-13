@@ -1,4 +1,4 @@
-name: Prod Backend CI CD
+name: Prod Backend Deploy CI CD
 
 on:
     push:

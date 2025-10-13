@@ -1,21 +1,13 @@
-/* eslint-disable no-console */
 import dotenv from "dotenv"
 import fs from "fs"
 import path from "path"
 
-// const envPath = process.argv[2] || ".env"
-// const envFullPath = path.resolve(envPath)
-
 const initEnvConfig = () => {
     if (!process.env.parsed) {
-        // const envPath = process.env.NODE_ENV ? `.env.${process.env.NODE_ENV}` : ".env"
-        const envPath = ".env"
+        const envPath = process.env.NODE_ENV ? `.env.${process.env.NODE_ENV}` : ".env"
         const envFullPath = path.resolve(envPath)
 
         try {
-            if (!fs.existsSync(envFullPath)) {
-                throw new Error(".env not found! rename .env.dev and create .env, update db url etc.")
-            }
             fs.accessSync(envFullPath, fs.constants.R_OK)
             console.debug("init", envPath)
             dotenv.config({ path: envFullPath })
@@ -28,7 +20,6 @@ const initEnvConfig = () => {
             }
         }
     } else {
-        // eslint-disable-next-line no-console
         console.debug("already env loaded")
     }
 }

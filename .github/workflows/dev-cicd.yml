@@ -2,7 +2,9 @@ name: Dev CI CD
 
 on:
     push:
-        branches: [master]
+        branches: [dev]
+    pull_request:
+        branches: [dev]
 
 jobs:
     build:
@@ -24,9 +26,9 @@ jobs:
               run: |
                   pnpm lint:check
 
-            # - name: Test
-            #   run: |
-            #       pnpm test
+            - name: Test
+              run: |
+                  pnpm test
 
             - name: Build
               run: |

@@ -7,5 +7,5 @@ export const runSeed = async () => {
     myLogger().info("Seed Done")
     process.exit(0)
 }
-// eslint-disable-next-line no-void
+
 void runSeed()

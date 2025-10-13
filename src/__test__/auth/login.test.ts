@@ -9,10 +9,11 @@ import { TestUtil } from "../test.util"
 // login -> login normal, login invalid, login as admin
 
 describe("login 🎇", () => {
-    let cookie = ""
+    let accessToken = ""
 
     beforeAll(async () => {
-        await TestUtil.createUser()
+        console.log("========= login 🎇 ========")
+        accessToken = await TestUtil.createUser(supertest(app))
     })
     afterAll(async () => {
         await TestUtil.cleanDbAndRedis()
@@ -31,10 +32,13 @@ describe("login 🎇", () => {
         })
         expect(res.statusCode).toBe(StatusCode.OK)
         expect(res.body.token).toBeDefined()
-        cookie = res.headers["set-cookie"][0]
+
+        // Parse cookies from the Set-Cookie header
+        const setCookie = res.headers["set-cookie"][0]
+        accessToken = TestUtil.parseTokenFromCookie(setCookie) || "invalid token"
     })
     it("get logged in user", async () => {
-        const { statusCode, body } = await TestUtil.getLoggedInUser(supertest(app), cookie)
+        const { statusCode, body } = await TestUtil.getLoggedInUser(supertest(app), accessToken)
         expect(statusCode).toBe(StatusCode.OK)
         expect(body.session.userId).toBeDefined()
         expect(body.user.id).toBeDefined()
@@ -46,10 +50,12 @@ describe("login 🎇", () => {
         })
         expect(res.statusCode).toBe(StatusCode.OK)
         expect(res.body.token).toBeDefined()
-        cookie = res.headers["set-cookie"][0]
+        // Parse cookies from the Set-Cookie header
+        const setCookie = res.headers["set-cookie"]
+        accessToken = TestUtil.parseTokenFromCookie(setCookie[0]) || "invalid token"
     })
     it("get logged in user", async () => {
-        const { statusCode, body } = await TestUtil.getLoggedInUser(supertest(app), cookie)
+        const { statusCode, body } = await TestUtil.getLoggedInUser(supertest(app), accessToken)
         expect(statusCode).toBe(StatusCode.OK)
         expect(body.session.userId).toBeDefined()
         expect(body.user.id).toBeDefined()
