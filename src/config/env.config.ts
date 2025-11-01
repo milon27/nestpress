@@ -9,10 +9,12 @@ const initEnvConfig = () => {
 
         try {
             fs.accessSync(envFullPath, fs.constants.R_OK)
+            // eslint-disable-next-line no-console
             console.debug("init", envPath)
             dotenv.config({ path: envFullPath })
         } catch (err) {
             if ((err as NodeJS.ErrnoException).code === "ENOENT") {
+                // eslint-disable-next-line no-console
                 console.debug("init .env")
                 dotenv.config({ path: ".env" })
             } else {
@@ -20,6 +22,7 @@ const initEnvConfig = () => {
             }
         }
     } else {
+        // eslint-disable-next-line no-console
         console.debug("already env loaded")
     }
 }

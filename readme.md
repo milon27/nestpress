@@ -1,5 +1,12 @@
 # Nestpress boilerplate with Authentication module
 
+# Deploy:
+
+- create SSH_PRIVATE_KEY or SSH_PASSWORD in github action secret
+- crate DOT_ENV_PROD in github variable
+- update IP address and app name in .github/workflows/prod-cicd.yml
+- api will run on 400x e.g. 4004
+
 ## How to use this template using [nestpress cli](https://www.npmjs.com/package/nestpress).
 
 ```bash

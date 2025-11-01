@@ -24,7 +24,7 @@ jobs:
 
             - name: Lint Check
               run: |
-                  pnpm lint:check
+                  NODE_OPTIONS="--max-old-space-size=8192" pnpm lint:check
 
             - name: Test
               run: |
