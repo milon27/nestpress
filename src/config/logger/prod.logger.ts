@@ -11,17 +11,24 @@ export const prodLogger = createLogger({
         format.prettyPrint(),
         format.json()
     ),
-    transports: [
-        new LokiTransport({
-            host: `${EnvConfig.LOKI_HOST}`,
-            labels: { app: packageJson.name },
-            json: true,
-            basicAuth: `${EnvConfig.LOKI_AUTH}`,
-            format: format.json(),
-            replaceTimestamp: true,
-        }),
-        new transports.Console({
-            format: format.combine(format.simple(), format.colorize()),
-        }),
-    ],
+    transports:
+        EnvConfig.LOKI_AUTH && EnvConfig.LOKI_HOST
+            ? [
+                  new LokiTransport({
+                      host: `${EnvConfig.LOKI_HOST}`,
+                      labels: { app: packageJson.name },
+                      json: true,
+                      basicAuth: `${EnvConfig.LOKI_AUTH}`,
+                      format: format.json(),
+                      replaceTimestamp: true,
+                  }),
+                  new transports.Console({
+                      format: format.combine(format.simple(), format.colorize()),
+                  }),
+              ]
+            : [
+                  new transports.Console({
+                      format: format.combine(format.simple(), format.colorize()),
+                  }),
+              ],
 })

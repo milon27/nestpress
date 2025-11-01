@@ -4,6 +4,8 @@ import express from "express"
 import helmet from "helmet"
 import "./config/env.config"
 // import "./config/firebase.config"
+import { toNodeHandler } from "better-auth/node"
+import { auth } from "./config/auth/auth"
 import v1RouterConfig from "./config/router/v1-router.config"
 import { globalErrorMid, notFoundMid } from "./middleware/error.mid"
 import { infoMid } from "./middleware/info.mid"
@@ -15,6 +17,7 @@ const app = express()
 
 // middleware
 
+app.all("/api/auth/{*any}", toNodeHandler(auth))
 app.use(helmet())
 app.use(globalRateLimiter)
 app.use(express.static("public"))

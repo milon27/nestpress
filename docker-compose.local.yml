@@ -6,8 +6,6 @@ services:
         environment:
             - MYSQL_ROOT_PASSWORD=myPassWord
             - MYSQL_DATABASE=test
-        ports:
-            - 3309:3306
         networks:
             - np_network
         volumes:
@@ -22,8 +20,6 @@ services:
             - redis_vol:/data
         environment:
             - REDIS_PASSWORD=1234567
-        ports:
-            - 6380:6379
         networks:
             - np_network
 

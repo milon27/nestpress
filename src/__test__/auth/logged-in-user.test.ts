@@ -8,37 +8,23 @@ describe("logged in user 👤", () => {
     let accessToken = ""
 
     beforeAll(async () => {
-        const token = await TestUtil.createUser()
-        accessToken = token.accessToken
+        console.log("========= logged in user 👤 ========")
+        accessToken = await TestUtil.createUser(supertest(app))
     })
     afterAll(async () => {
         await TestUtil.cleanDbAndRedis()
     })
 
-    it("with cookie", async () => {
+    it("should get session and user with valid token", async () => {
         const { statusCode, body } = await TestUtil.getLoggedInUser(supertest(app), accessToken)
         expect(statusCode).toBe(StatusCode.OK)
-        expect(body.response).toBeDefined()
-        expect(body.response.id).toBeDefined()
+        expect(body.session.userId).toBeDefined()
+        expect(body.user.id).toBeDefined()
     })
 
-    it("with auth header", async () => {
-        const { statusCode, body } = await supertest(app)
-            .post("/v1/user")
-            .set({ Authorization: `Bearer ${accessToken}` })
-
+    it("should get null and status code 200 with invalid token", async () => {
+        const { statusCode, body } = await TestUtil.getLoggedInUser(supertest(app), "random token")
         expect(statusCode).toBe(StatusCode.OK)
-        expect(body.response).toBeDefined()
-        expect(body.response.id).toBeDefined()
-    })
-
-    it("with random invalid token", async () => {
-        const { statusCode } = await TestUtil.getLoggedInUser(supertest(app), "random token")
-        expect(statusCode).toBe(StatusCode.UNAUTHORIZED)
-    })
-
-    it("without any token", async () => {
-        const { statusCode } = await supertest(app).post("/v1/user")
-        expect(statusCode).toBe(StatusCode.UNAUTHORIZED)
+        expect(body).toBe(null)
     })
 })

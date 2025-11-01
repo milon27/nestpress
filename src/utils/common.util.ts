@@ -15,7 +15,6 @@ export const CommonUtil = {
     convertArrayToObject: <T extends string>(arr: readonly T[]): Record<T, T> => {
         return arr.reduce(
             (obj, value) => {
-                // eslint-disable-next-line no-param-reassign
                 obj[value] = value
                 return obj
             },

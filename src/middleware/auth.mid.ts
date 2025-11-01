@@ -1,19 +1,18 @@
+import { fromNodeHeaders } from "better-auth/node"
 import { NextFunction, Request, Response } from "express"
-import { ForbiddenError } from "../common/model/error.model"
-import { KeyConstant } from "../constant/key.constant"
-import { AccessTokenUtil } from "../utils/access-token.util"
+import { ForbiddenError, UnAuthorizedError } from "../common/model/error.model"
+import { auth } from "../config/auth/auth"
+import { IUser } from "../config/db/schema"
 
 const isLoggedInMid = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        // todo: const authHead = req.agent === "android" ? req.headers.authorization : undefined
-        const authHead = req.headers.authorization
-        const token: string | undefined =
-            req.cookies[KeyConstant.ACCESS_TOKEN_COOKIE_KEY] || (authHead && authHead.split(" ")[1])
-
         // token validation
-        const user = await AccessTokenUtil.verifyToken(token)
-        req.accessToken = token
-        req.user = user
+        const session = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) })
+        if (!session) {
+            throw new UnAuthorizedError()
+        }
+        req.user = session.user as IUser
+        req.token = session.session.token
 
         next()
     } catch (e) {
@@ -24,7 +23,7 @@ const isLoggedInMid = async (req: Request, res: Response, next: NextFunction) =>
 
 const isSuperAdmin = (req: Request, res: Response, next: NextFunction) => {
     try {
-        if (req.user.isSuperAdmin === true) {
+        if (req.user.role === "admin") {
             next()
         } else {
             throw new ForbiddenError("You don't have permission")

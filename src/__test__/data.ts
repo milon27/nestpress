@@ -1,17 +1,10 @@
-import { CommonConstant } from "../constant/common.constant"
-import { ILoginWithEmailDto } from "../feature/auth/login-register/dto/login.dto"
-import { IRegisterDto, RegisterProvider } from "../feature/auth/login-register/dto/register.dto"
-
 // auth
-export const loginUserPayload: ILoginWithEmailDto = {
+export const loginUserPayload = {
     email: "test@g.com",
-    password: "1234567",
+    password: "12345678",
 }
-export const createUserPayload: IRegisterDto = {
-    provider: RegisterProvider.simple,
-    user: {
-        ...loginUserPayload,
-        fullName: "test",
-        timeZone: CommonConstant.TIMEZONE,
-    },
+export const createUserPayload = {
+    ...loginUserPayload,
+    name: "test",
+    rememberMe: true,
 }

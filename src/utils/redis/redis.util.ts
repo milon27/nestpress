@@ -1,9 +1,9 @@
-import { MyJSON } from "../common/module/json/my-json.service"
-import { myLogger } from "../config/logger"
-import { redisClient } from "../config/redis/redis.config"
-import { KeyValueDataUtil } from "./redis/data.util"
-import { RedisHashUtil } from "./redis/hash.util"
-import { UpdateExpUtil } from "./redis/update-exp.util"
+import { MyJSON } from "../../common/module/json/my-json.service"
+import { myLogger } from "../../config/logger"
+import { redisClient } from "../../config/redis/redis.config"
+import { KeyValueDataUtil } from "./data.util"
+import { RedisHashUtil } from "./hash.util"
+import { UpdateExpUtil } from "./update-exp.util"
 
 export const RedisUtil = {
     /**

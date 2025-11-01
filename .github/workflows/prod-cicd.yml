@@ -1,4 +1,4 @@
-name: Prod Backend CI CD
+name: Prod Backend Deploy CI CD
 
 on:
     push:
@@ -20,6 +20,12 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v3
+
+            - name: Create .env.prod from github variables
+              run: |
+                  printf '%s\n' '${{ vars.DOT_ENV_PROD }}' > .env.prod
+                  echo "✅ .env.prod created successfully"
+                  echo "File size: $(wc -l < .env.prod) lines"
 
             - name: Set up Docker Buildx
               uses: docker/setup-buildx-action@v1
@@ -64,7 +70,7 @@ jobs:
                   # key: ${{ secrets.SSH_PRIVATE_KEY }}
                   port: ${{ env.SSH_PORT }}
                   script: |
-                      echo "run the nginx proxy manager + redis"
+                      echo "run the nginx proxy manager + redis (db will be bought from DO)"
                       docker compose up -d
                       echo "sleep 2 sec."
                       sleep 2

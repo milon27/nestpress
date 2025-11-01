@@ -6,7 +6,7 @@ describe("health-check", () => {
     describe("check root route", () => {
         it("should return text with env values", async () => {
             const result = await supertest(app).get("/v1/health")
-            expect(result.text).contain("Running app in test , https:false, TZ:Etc/UTC")
+            expect(result.text).contain("Running app in test, https:false, TZ:Etc/UTC")
         })
     })
     describe("check database connection", () => {

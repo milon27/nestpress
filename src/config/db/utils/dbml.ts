@@ -1,7 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { mysqlGenerate } from "drizzle-dbml-generator" // Using Postgres for this example
-
-import { schemas } from "../db"
+import * as schemas from "../schema/index"
 
 mysqlGenerate({
     schema: schemas,

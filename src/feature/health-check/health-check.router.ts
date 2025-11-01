@@ -28,12 +28,6 @@ HealthCheckRouter.get("/db", HealthCheckController.checkDatabaseConnection)
 HealthCheckRouter.get("/redis", HealthCheckController.redisConnectionCheck)
 
 /**
- * @description Check fcm push notification
- * @url {{BASE_URL}}/health/fcm
- */
-HealthCheckRouter.get("/fcm", HealthCheckController.fcmCheck)
-
-/**
  * @description logger route
  * @url {{BASE_URL}}/health/logger
  */

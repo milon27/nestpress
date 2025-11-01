@@ -2,7 +2,6 @@ import supertest from "supertest"
 import { afterAll, beforeAll, describe, expect, it } from "vitest"
 import app from "../../app"
 import { StatusCode } from "../../constant/code.constant"
-import { KeyConstant } from "../../constant/key.constant"
 import { TestUtil } from "../test.util"
 
 // login -> login normal, login invalid, login as admin
@@ -11,30 +10,34 @@ describe("logout 📤", () => {
     let accessToken = ""
 
     beforeAll(async () => {
-        const token = await TestUtil.createUser()
-        accessToken = token.accessToken
+        console.log("========= logout 📤 ========")
+        accessToken = await TestUtil.createUser(supertest(app))
     })
     afterAll(async () => {
         await TestUtil.cleanDbAndRedis()
     })
 
     it("logged in user logout", async () => {
-        const { statusCode } = await supertest(app)
-            .post("/v1/auth/logout")
-            .set("Cookie", `${KeyConstant.ACCESS_TOKEN_COOKIE_KEY}=${accessToken}`)
+        const { statusCode, body } = await TestUtil.setTokenInRequest(
+            supertest(app).post("/api/auth/sign-out"),
+            accessToken
+        )
         accessToken = ""
         expect(statusCode).toBe(StatusCode.OK)
+        expect(body.success).toBe(true)
     })
 
     it("try to logout again", async () => {
-        const { statusCode } = await supertest(app)
-            .post("/v1/auth/logout")
-            .set("Cookie", `${KeyConstant.ACCESS_TOKEN_COOKIE_KEY}=${accessToken}`)
-        expect(statusCode).toBe(StatusCode.UNAUTHORIZED)
+        const { statusCode } = await TestUtil.setTokenInRequest(
+            supertest(app).post("/api/auth/sign-out"),
+            accessToken
+        )
+        expect(statusCode).toBe(StatusCode.BAD_REQUEST)
     })
 
     it("without login try to access profile", async () => {
-        const { statusCode } = await TestUtil.getLoggedInUser(supertest(app), accessToken)
-        expect(statusCode).toBe(StatusCode.UNAUTHORIZED)
+        const { body, statusCode } = await TestUtil.getLoggedInUser(supertest(app), "random token")
+        expect(statusCode).toBe(StatusCode.OK)
+        expect(body).toBe(null)
     })
 })

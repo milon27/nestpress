@@ -12,7 +12,8 @@ describe("login 🎇", () => {
     let accessToken = ""
 
     beforeAll(async () => {
-        await TestUtil.createUser()
+        console.log("========= login 🎇 ========")
+        accessToken = await TestUtil.createUser(supertest(app))
     })
     afterAll(async () => {
         await TestUtil.cleanDbAndRedis()
@@ -20,40 +21,43 @@ describe("login 🎇", () => {
 
     it("given invalid credentials", async () => {
         // todo: check error from zod
-        const { statusCode, body } = await supertest(app).post("/v1/auth/login-with-email").send({})
+        const { statusCode } = await supertest(app).post("/api/auth/sign-in/email").send({})
 
-        expect(body.message.body.email._errors).toBeDefined()
-        expect(body.message.body.password._errors).toBeDefined()
         expect(statusCode).toBe(StatusCode.BAD_REQUEST)
     })
     it("given valid credentials", async () => {
-        const { statusCode, body } = await supertest(app).post("/v1/auth/login-with-email").send({
-            email: createUserPayload.user.email,
-            password: createUserPayload.user.password,
+        const res = await supertest(app).post("/api/auth/sign-in/email").send({
+            email: createUserPayload.email,
+            password: createUserPayload.password,
         })
-        expect(statusCode).toBe(StatusCode.OK)
-        expect(body.response.accessToken).toBeDefined()
-        accessToken = body.response.accessToken
+        expect(res.statusCode).toBe(StatusCode.OK)
+        expect(res.body.token).toBeDefined()
+
+        // Parse cookies from the Set-Cookie header
+        const setCookie = res.headers["set-cookie"][0]
+        accessToken = TestUtil.parseTokenFromCookie(setCookie) || "invalid token"
     })
     it("get logged in user", async () => {
         const { statusCode, body } = await TestUtil.getLoggedInUser(supertest(app), accessToken)
         expect(statusCode).toBe(StatusCode.OK)
-        expect(body.response).toBeDefined()
-        expect(body.response.id).toBeDefined()
+        expect(body.session.userId).toBeDefined()
+        expect(body.user.id).toBeDefined()
     })
     it("given admin credentials", async () => {
-        const { statusCode, body } = await supertest(app).post("/v1/auth/login-with-email").send({
-            email: createUserPayload.user.email,
+        const res = await supertest(app).post("/api/auth/sign-in/email").send({
+            email: createUserPayload.email,
             password: CommonConstant.DEFAULT_ADMIN_PASSWORD,
         })
-        expect(statusCode).toBe(StatusCode.OK)
-        expect(body.response.accessToken).toBeDefined()
-        accessToken = body.response.accessToken
+        expect(res.statusCode).toBe(StatusCode.OK)
+        expect(res.body.token).toBeDefined()
+        // Parse cookies from the Set-Cookie header
+        const setCookie = res.headers["set-cookie"]
+        accessToken = TestUtil.parseTokenFromCookie(setCookie[0]) || "invalid token"
     })
     it("get logged in user", async () => {
         const { statusCode, body } = await TestUtil.getLoggedInUser(supertest(app), accessToken)
         expect(statusCode).toBe(StatusCode.OK)
-        expect(body.response).toBeDefined()
-        expect(body.response.id).toBeDefined()
+        expect(body.session.userId).toBeDefined()
+        expect(body.user.id).toBeDefined()
     })
 })

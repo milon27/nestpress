@@ -11,5 +11,4 @@ export const cleanRedis = async () => {
     }
 }
 
-// eslint-disable-next-line no-void
 void cleanRedis()

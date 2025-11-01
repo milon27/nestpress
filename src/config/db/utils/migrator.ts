@@ -17,5 +17,5 @@ const doMigrate = async () => {
         process.exit(0)
     }
 }
-// eslint-disable-next-line no-void
+
 void doMigrate()

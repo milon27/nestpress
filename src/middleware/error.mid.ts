@@ -12,7 +12,6 @@ export const notFoundMid = (_req: Request, res: Response, next: NextFunction) =>
     }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const globalErrorMid = (err: ErrorRequestHandler, _req: Request, res: Response, _next: NextFunction) => {
     myLogger().error(err)
     return errorResponse(res, err)
