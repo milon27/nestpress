@@ -16,11 +16,11 @@ jobs:
             - name: PNPM Install
               uses: pnpm/action-setup@v4
               with:
-                  version: 8
+                  version: 11.5.2
 
             - name: Deps Install
               run: |
-                  pnpm i
+                  pnpm install --frozen-lockfile
 
             - name: Lint Check
               run: |

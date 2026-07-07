@@ -1,12 +1,12 @@
-FROM node:20.18.0-alpine AS build
-RUN npm install -g pnpm
+FROM node:22.15.0-alpine AS build
+RUN npm install -g pnpm@11.5.2
 
 WORKDIR /app
 
 COPY package.json .
 COPY pnpm-lock.yaml .
 
-RUN pnpm install
+RUN pnpm install --frozen-lockfile
 
 COPY . .
 
@@ -14,8 +14,8 @@ RUN npm run build
 
 # # ------------------dev -------------------
 
-FROM node:20.18.0-alpine AS dev
-RUN npm install -g pnpm
+FROM node:22.15.0-alpine AS dev
+RUN npm install -g pnpm@11.5.2
 
 WORKDIR /app
 
@@ -36,8 +36,8 @@ CMD ["/bin/sh", "-c", "pnpm db:migrate:prod && pnpm db:seed:prod && node dist/sr
 
 # # ------------------prod -------------------
 
-FROM node:20.18.0-alpine AS prod
-RUN npm install -g pnpm
+FROM node:22.15.0-alpine AS prod
+RUN npm install -g pnpm@11.5.2
 
 WORKDIR /app
 
