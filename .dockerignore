@@ -5,7 +5,11 @@ Dockerfile
 *.md
 .pnpm-debug.log
 /uploads
+.vscode
+.claude
+.git
 
 # .envs
-# .env
-# .env.prod and account json for firebase should be allowed to copy into container otherwise how it will run
+.env
+# .env.dev / .env.prod (and account json for firebase) should be allowed to copy
+# into the container otherwise how it will run
