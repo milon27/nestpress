@@ -10,7 +10,13 @@ services:
             - np_network
         volumes:
             - db_vol:/var/lib/mysql
-    # - .backup-db:/docker-entrypoint-initdb.d
+        # - .backup-db:/docker-entrypoint-initdb.d
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pmyPassWord"]
+            interval: 5s
+            timeout: 5s
+            retries: 15
+            start_period: 30s
 
     np_redis:
         container_name: np_redis
@@ -26,8 +32,10 @@ services:
     np_api:
         container_name: np_api
         depends_on:
-            - np_redis
-            - np_mysql
+            np_redis:
+                condition: service_started
+            np_mysql:
+                condition: service_healthy
         build:
             context: .
             dockerfile: Dockerfile

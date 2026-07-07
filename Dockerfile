@@ -5,6 +5,7 @@ WORKDIR /app
 
 COPY package.json .
 COPY pnpm-lock.yaml .
+COPY pnpm-workspace.yaml .
 
 RUN pnpm install --frozen-lockfile
 
@@ -32,7 +33,9 @@ COPY --from=build /app/dist/ ./dist/
 # seed the db (plan list)
 # run the app
 
-CMD ["/bin/sh", "-c", "pnpm db:migrate:prod && pnpm db:seed:prod && node dist/src/server.js"]
+# Run compiled JS directly (no pnpm at runtime — avoids the deps-status-check
+# that triggers a slow supply-chain network call and ignored-build errors on boot)
+CMD ["/bin/sh", "-c", "node dist/src/config/db/utils/migrator.js && node dist/src/config/db/utils/seed.js && node dist/src/server.js"]
 
 # # ------------------prod -------------------
 
@@ -54,4 +57,6 @@ COPY --from=build /app/dist/ ./dist/
 # seed the db (plan list)
 # run the app
 
-CMD ["/bin/sh", "-c", "pnpm db:migrate:prod && pnpm db:seed:prod && node dist/src/server.js"]
+# Run compiled JS directly (no pnpm at runtime — avoids the deps-status-check
+# that triggers a slow supply-chain network call and ignored-build errors on boot)
+CMD ["/bin/sh", "-c", "node dist/src/config/db/utils/migrator.js && node dist/src/config/db/utils/seed.js && node dist/src/server.js"]
